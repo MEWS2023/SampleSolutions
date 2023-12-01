@@ -1,0 +1,1017 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<description:Group xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:properties="http://www.eclipse.org/sirius/properties/1.0.0" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:tool="http://www.eclipse.org/sirius/diagram/description/tool/1.1.0" xmlns:tool_1="http://www.eclipse.org/sirius/description/tool/1.1.0" name="scml" version="12.0.0.2017041100">
+  <ownedViewpoints name="Planning_Viewpoint">
+    <ownedRepresentations xsi:type="description_1:DiagramDescription" name="SC_Planning_Diagram" domainClass="scml::SmartCity" enablePopupBars="true">
+      <defaultLayer name="Default">
+        <nodeMappings name="Category" semanticCandidatesExpression="feature:category" domainClass="scml::Category">
+          <style xsi:type="style:EllipseNodeDescription" labelSize="12" showIcon="false" labelPosition="node" resizeKind="NSEW">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelFormat>underline</labelFormat>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+          </style>
+        </nodeMappings>
+        <edgeMappings name="CategoryProject" sourceMapping="//@ownedViewpoints[name='Planning_Viewpoint']/@ownedRepresentations[name='SC_Planning_Diagram']/@defaultLayer/@nodeMappings[name='Category']" targetMapping="//@ownedViewpoints[name='Planning_Viewpoint']/@ownedRepresentations[name='SC_Planning_Diagram']/@defaultLayer/@containerMappings[name='Project']" targetFinderExpression="aql: self.eContainer().project -> select( p | p.category -> includes(self))">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <centerLabelStyleDescription labelSize="12" showIcon="false" labelExpression="aql: 'SDGs ' + self.SDG -> sep(', ')">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <containerMappings name="Project" semanticCandidatesExpression="feature:project" domainClass="scml::Project">
+          <subContainerMappings name="ParentInfrastructure" semanticCandidatesExpression="aql: self.component -> select( i | i.isPartOf -> isEmpty())" domainClass="scml::InfrastructureComponent">
+            <borderedNodeMappings name="ParentDevice" semanticCandidatesExpression="feature:device" domainClass="scml::Device">
+              <style xsi:type="style:WorkspaceImageDescription" labelSize="12" showIcon="false" sizeComputationExpression="-1" resizeKind="NSEW" workspacePath="/scml.design/img/monitor.png">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              </style>
+            </borderedNodeMappings>
+            <subContainerMappings name="ChildInfrastructure" semanticCandidatesExpression="feature:composedOf" domainClass="scml::InfrastructureComponent">
+              <borderedNodeMappings name="ChildDevice" semanticCandidatesExpression="feature:device" domainClass="scml::Device">
+                <style xsi:type="style:WorkspaceImageDescription" labelSize="12" showIcon="false" sizeComputationExpression="-1" resizeKind="NSEW" workspacePath="/scml.design/img/monitor.png">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                </style>
+              </borderedNodeMappings>
+              <conditionnalStyles predicateExpression="[self.oclIsTypeOf(scml::TransportationComponent) /]">
+                <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="aql: self.name + ' [' + self.location.Lat + ', ' + self.location.Long + ']'" iconPath="/scml.design/img/public-transport.png">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_red']"/>
+                  <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                </style>
+              </conditionnalStyles>
+              <conditionnalStyles predicateExpression="[self.oclIsTypeOf(scml::EnvironmentalComponent) /]">
+                <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="aql: self.name + ' [' + self.location.Lat + ', ' + self.location.Long + ']'" iconPath="/scml.design/img/forest.png">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_green']"/>
+                  <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_chocolate']"/>
+                </style>
+              </conditionnalStyles>
+            </subContainerMappings>
+            <conditionnalStyles predicateExpression="[self.oclIsTypeOf(scml::EnvironmentalComponent) /]">
+              <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="aql: self.name + ' [' + self.location.Lat + ', ' + self.location.Long + ']'" iconPath="/scml.design/img/forest.png">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_green']"/>
+                <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_chocolate']"/>
+              </style>
+            </conditionnalStyles>
+            <conditionnalStyles predicateExpression="[self.oclIsTypeOf(scml::TransportationComponent) /]">
+              <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="aql: self.name + ' [' + self.location.Lat + ', ' + self.location.Long + ']'" iconPath="/scml.design/img/public-transport.png">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_red']"/>
+                <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              </style>
+            </conditionnalStyles>
+            <conditionnalStyles predicateExpression="[self.oclIsTypeOf(scml::BuildingComponent) /]">
+              <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="aql: self.name + ' [' + self.location.Lat + ', ' + self.location.Long + ']'" iconPath="/scml.design/img/building.png">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
+                <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_gray']"/>
+              </style>
+            </conditionnalStyles>
+          </subContainerMappings>
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" iconPath="/scml.design/img/project.png">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelFormat>bold</labelFormat>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+          </style>
+        </containerMappings>
+        <toolSections name="Elements">
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Project" containerMappings="//@ownedViewpoints[name='Planning_Viewpoint']/@ownedRepresentations[name='SC_Planning_Diagram']/@defaultLayer/@containerMappings[name='Project']" iconPath="/scml.design/img/project.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:CreateInstance" typeName="scml::Project" referenceName="project">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="newProject"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="BuildingComponent" containerMappings="//@ownedViewpoints[name='Planning_Viewpoint']/@ownedRepresentations[name='SC_Planning_Diagram']/@defaultLayer/@containerMappings[name='Project']/@subContainerMappings[name='ParentInfrastructure'] //@ownedViewpoints[name='Planning_Viewpoint']/@ownedRepresentations[name='SC_Planning_Diagram']/@defaultLayer/@containerMappings[name='Project']/@subContainerMappings[name='ParentInfrastructure']/@subContainerMappings[name='ChildInfrastructure']" iconPath="/scml.design/img/building.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:Switch">
+                  <cases conditionExpression="[self.oclIsKindOf(scml::InfrastructureComponent) /]">
+                    <subModelOperations xsi:type="tool_1:CreateInstance" typeName="scml::BuildingComponent" referenceName="composedOf">
+                      <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="new Building"/>
+                      <subModelOperations xsi:type="tool_1:SetValue" featureName="isPartOf" valueExpression="var:container"/>
+                      <subModelOperations xsi:type="tool_1:Let" variableName="newBuilding" valueExpression="var:self"/>
+                      <subModelOperations xsi:type="tool_1:CreateInstance" typeName="scml::Location" referenceName="location">
+                        <subModelOperations xsi:type="tool_1:SetValue" featureName="Lat" valueExpression="0.0"/>
+                        <subModelOperations xsi:type="tool_1:SetValue" featureName="Long" valueExpression="0.0"/>
+                      </subModelOperations>
+                      <subModelOperations xsi:type="properties:DialogModelOperation" titleExpression="New Building">
+                        <buttons labelExpression="Cancel" closeDialogOnClick="true" rollbackChangesOnClose="true">
+                          <initialOperation/>
+                        </buttons>
+                        <buttons labelExpression="OK" default="true" closeDialogOnClick="true">
+                          <initialOperation/>
+                        </buttons>
+                        <page name="Default Page" labelExpression="Create new Infrastructure" semanticCandidateExpression="var:self" groups="//@ownedViewpoints[name='Planning_Viewpoint']/@ownedRepresentations[name='SC_Planning_Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='BuildingComponent']/@initialOperation/@firstModelOperations/@subModelOperations.0/@cases.0/@subModelOperations.0/@subModelOperations.4/@groups.0 //@ownedViewpoints[name='Planning_Viewpoint']/@ownedRepresentations[name='SC_Planning_Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='BuildingComponent']/@initialOperation/@firstModelOperations/@subModelOperations.0/@cases.0/@subModelOperations.0/@subModelOperations.4/@groups.1"/>
+                        <groups name="Name" labelExpression="Name" semanticCandidateExpression="var:self">
+                          <controls xsi:type="properties:TextDescription" name="Name" valueExpression="feature:name">
+                            <initialOperation>
+                              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:self">
+                                <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="aql:newValue"/>
+                              </firstModelOperations>
+                            </initialOperation>
+                          </controls>
+                        </groups>
+                        <groups name="Location" labelExpression="Group" semanticCandidateExpression="var:self">
+                          <controls xsi:type="properties:TextDescription" name="Lat" labelExpression="Lat" valueExpression="aql:self.location.Lat">
+                            <initialOperation>
+                              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[self.location /]">
+                                <subModelOperations xsi:type="tool_1:SetValue" featureName="Lat" valueExpression="aql:newValue"/>
+                              </firstModelOperations>
+                            </initialOperation>
+                          </controls>
+                          <controls xsi:type="properties:TextDescription" name="Long" labelExpression="Long" valueExpression="aql:self.location.Long">
+                            <initialOperation>
+                              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[self.location /]">
+                                <subModelOperations xsi:type="tool_1:SetValue" featureName="Long" valueExpression="aql:newValue"/>
+                              </firstModelOperations>
+                            </initialOperation>
+                          </controls>
+                        </groups>
+                      </subModelOperations>
+                    </subModelOperations>
+                    <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[self.eContainer() /]">
+                      <subModelOperations xsi:type="tool_1:SetValue" featureName="component" valueExpression="var:newBuilding"/>
+                    </subModelOperations>
+                  </cases>
+                  <default>
+                    <subModelOperations xsi:type="tool_1:CreateInstance" typeName="scml::BuildingComponent" referenceName="component">
+                      <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="new Building"/>
+                      <subModelOperations xsi:type="tool_1:CreateInstance" typeName="scml::Location" referenceName="location">
+                        <subModelOperations xsi:type="tool_1:SetValue" featureName="Lat" valueExpression="0.0"/>
+                        <subModelOperations xsi:type="tool_1:SetValue" featureName="Long" valueExpression="0.0"/>
+                      </subModelOperations>
+                      <subModelOperations xsi:type="properties:DialogModelOperation" titleExpression="New Building">
+                        <buttons labelExpression="Cancel" closeDialogOnClick="true" rollbackChangesOnClose="true">
+                          <initialOperation/>
+                        </buttons>
+                        <buttons labelExpression="OK" default="true" closeDialogOnClick="true">
+                          <initialOperation/>
+                        </buttons>
+                        <page name="Default Page" labelExpression="Create new Infrastructure" semanticCandidateExpression="var:self" groups="//@ownedViewpoints[name='Planning_Viewpoint']/@ownedRepresentations[name='SC_Planning_Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='BuildingComponent']/@initialOperation/@firstModelOperations/@subModelOperations.0/@default/@subModelOperations.0/@subModelOperations.2/@groups.0 //@ownedViewpoints[name='Planning_Viewpoint']/@ownedRepresentations[name='SC_Planning_Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='BuildingComponent']/@initialOperation/@firstModelOperations/@subModelOperations.0/@default/@subModelOperations.0/@subModelOperations.2/@groups.1"/>
+                        <groups name="Name" labelExpression="Name" semanticCandidateExpression="var:self">
+                          <controls xsi:type="properties:TextDescription" name="Name" valueExpression="feature:name">
+                            <initialOperation>
+                              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:self">
+                                <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="aql:newValue"/>
+                              </firstModelOperations>
+                            </initialOperation>
+                          </controls>
+                        </groups>
+                        <groups name="Location" labelExpression="Group" semanticCandidateExpression="var:self">
+                          <controls xsi:type="properties:TextDescription" name="Lat" labelExpression="Lat" valueExpression="aql:self.location.Lat">
+                            <initialOperation>
+                              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql: self.location">
+                                <subModelOperations xsi:type="tool_1:SetValue" featureName="Lat" valueExpression="aql:newValue"/>
+                              </firstModelOperations>
+                            </initialOperation>
+                          </controls>
+                          <controls xsi:type="properties:TextDescription" name="Long" labelExpression="Long" valueExpression="aql:self.location.Long">
+                            <initialOperation>
+                              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql: self.location">
+                                <subModelOperations xsi:type="tool_1:SetValue" featureName="Long" valueExpression="aql:newValue"/>
+                              </firstModelOperations>
+                            </initialOperation>
+                          </controls>
+                        </groups>
+                      </subModelOperations>
+                    </subModelOperations>
+                  </default>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="TransportationComponent" containerMappings="//@ownedViewpoints[name='Planning_Viewpoint']/@ownedRepresentations[name='SC_Planning_Diagram']/@defaultLayer/@containerMappings[name='Project']/@subContainerMappings[name='ParentInfrastructure'] //@ownedViewpoints[name='Planning_Viewpoint']/@ownedRepresentations[name='SC_Planning_Diagram']/@defaultLayer/@containerMappings[name='Project']/@subContainerMappings[name='ParentInfrastructure']/@subContainerMappings[name='ChildInfrastructure']" iconPath="/scml.design/img/public-transport.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:Switch">
+                  <cases conditionExpression="[self.oclIsKindOf(scml::InfrastructureComponent) /]">
+                    <subModelOperations xsi:type="tool_1:CreateInstance" typeName="scml::TransportationComponent" referenceName="composedOf">
+                      <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="new Transportation"/>
+                      <subModelOperations xsi:type="tool_1:SetValue" featureName="isPartOf" valueExpression="var:container"/>
+                      <subModelOperations xsi:type="tool_1:Let" variableName="newTransportation" valueExpression="var:self"/>
+                      <subModelOperations xsi:type="tool_1:CreateInstance" typeName="scml::Location" referenceName="location">
+                        <subModelOperations xsi:type="tool_1:SetValue" featureName="Lat" valueExpression="0.0"/>
+                        <subModelOperations xsi:type="tool_1:SetValue" featureName="Long" valueExpression="0.0"/>
+                      </subModelOperations>
+                      <subModelOperations xsi:type="properties:DialogModelOperation" titleExpression="New Transportation">
+                        <buttons labelExpression="Cancel" closeDialogOnClick="true" rollbackChangesOnClose="true">
+                          <initialOperation/>
+                        </buttons>
+                        <buttons labelExpression="OK" default="true" closeDialogOnClick="true">
+                          <initialOperation/>
+                        </buttons>
+                        <page name="Default Page" labelExpression="Create new Infrastructure" semanticCandidateExpression="var:self" groups="//@ownedViewpoints[name='Planning_Viewpoint']/@ownedRepresentations[name='SC_Planning_Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='TransportationComponent']/@initialOperation/@firstModelOperations/@subModelOperations.0/@cases.0/@subModelOperations.0/@subModelOperations.4/@groups.0 //@ownedViewpoints[name='Planning_Viewpoint']/@ownedRepresentations[name='SC_Planning_Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='TransportationComponent']/@initialOperation/@firstModelOperations/@subModelOperations.0/@cases.0/@subModelOperations.0/@subModelOperations.4/@groups.1"/>
+                        <groups name="Name" labelExpression="Name" semanticCandidateExpression="var:self">
+                          <controls xsi:type="properties:TextDescription" name="Name" valueExpression="feature:name">
+                            <initialOperation>
+                              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:self">
+                                <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="aql:newValue"/>
+                              </firstModelOperations>
+                            </initialOperation>
+                          </controls>
+                        </groups>
+                        <groups name="Location" labelExpression="Group" semanticCandidateExpression="var:self">
+                          <controls xsi:type="properties:TextDescription" name="Lat" labelExpression="Lat" valueExpression="aql:self.location.Lat">
+                            <initialOperation>
+                              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql: self.location">
+                                <subModelOperations xsi:type="tool_1:SetValue" featureName="Lat" valueExpression="aql:newValue"/>
+                              </firstModelOperations>
+                            </initialOperation>
+                          </controls>
+                          <controls xsi:type="properties:TextDescription" name="Long" labelExpression="Long" valueExpression="aql:self.location.Long">
+                            <initialOperation>
+                              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql: self.location">
+                                <subModelOperations xsi:type="tool_1:SetValue" featureName="Long" valueExpression="aql:newValue"/>
+                              </firstModelOperations>
+                            </initialOperation>
+                          </controls>
+                        </groups>
+                      </subModelOperations>
+                    </subModelOperations>
+                    <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[self.eContainer() /]">
+                      <subModelOperations xsi:type="tool_1:SetValue" featureName="component" valueExpression="var:newTransportation"/>
+                    </subModelOperations>
+                  </cases>
+                  <default>
+                    <subModelOperations xsi:type="tool_1:CreateInstance" typeName="scml::TransportationComponent" referenceName="component">
+                      <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="new Transportation"/>
+                      <subModelOperations xsi:type="tool_1:CreateInstance" typeName="scml::Location" referenceName="location">
+                        <subModelOperations xsi:type="tool_1:SetValue" featureName="Lat" valueExpression="0.0"/>
+                        <subModelOperations xsi:type="tool_1:SetValue" featureName="Long" valueExpression="0.0"/>
+                      </subModelOperations>
+                      <subModelOperations xsi:type="properties:DialogModelOperation" titleExpression="New Transportation">
+                        <buttons labelExpression="Cancel" closeDialogOnClick="true" rollbackChangesOnClose="true">
+                          <initialOperation/>
+                        </buttons>
+                        <buttons labelExpression="OK" default="true" closeDialogOnClick="true">
+                          <initialOperation/>
+                        </buttons>
+                        <page name="Default Page" labelExpression="Create new Infrastructure" semanticCandidateExpression="var:self" groups="//@ownedViewpoints[name='Planning_Viewpoint']/@ownedRepresentations[name='SC_Planning_Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='TransportationComponent']/@initialOperation/@firstModelOperations/@subModelOperations.0/@default/@subModelOperations.0/@subModelOperations.2/@groups.0 //@ownedViewpoints[name='Planning_Viewpoint']/@ownedRepresentations[name='SC_Planning_Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='TransportationComponent']/@initialOperation/@firstModelOperations/@subModelOperations.0/@default/@subModelOperations.0/@subModelOperations.2/@groups.1"/>
+                        <groups name="Name" labelExpression="Name" semanticCandidateExpression="var:self">
+                          <controls xsi:type="properties:TextDescription" valueExpression="feature:name">
+                            <initialOperation>
+                              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:self">
+                                <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="aql:newValue"/>
+                              </firstModelOperations>
+                            </initialOperation>
+                          </controls>
+                        </groups>
+                        <groups name="Location" labelExpression="Group" semanticCandidateExpression="var:self">
+                          <controls xsi:type="properties:TextDescription" name="Lat" labelExpression="Lat" valueExpression="aql:self.location.Lat">
+                            <initialOperation>
+                              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql: self.location">
+                                <subModelOperations xsi:type="tool_1:SetValue" featureName="Lat" valueExpression="aql:newValue"/>
+                              </firstModelOperations>
+                            </initialOperation>
+                          </controls>
+                          <controls xsi:type="properties:TextDescription" name="Long" labelExpression="Long" valueExpression="aql:self.location.Long">
+                            <initialOperation>
+                              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql: self.location">
+                                <subModelOperations xsi:type="tool_1:SetValue" featureName="Long" valueExpression="aql:newValue"/>
+                              </firstModelOperations>
+                            </initialOperation>
+                          </controls>
+                        </groups>
+                      </subModelOperations>
+                    </subModelOperations>
+                  </default>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="EnvironmentalComponent" containerMappings="//@ownedViewpoints[name='Planning_Viewpoint']/@ownedRepresentations[name='SC_Planning_Diagram']/@defaultLayer/@containerMappings[name='Project']/@subContainerMappings[name='ParentInfrastructure'] //@ownedViewpoints[name='Planning_Viewpoint']/@ownedRepresentations[name='SC_Planning_Diagram']/@defaultLayer/@containerMappings[name='Project']/@subContainerMappings[name='ParentInfrastructure']/@subContainerMappings[name='ChildInfrastructure']" iconPath="/scml.design/img/forest.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:Switch">
+                  <cases conditionExpression="[self.oclIsKindOf(scml::InfrastructureComponent) /]">
+                    <subModelOperations xsi:type="tool_1:CreateInstance" typeName="scml::EnvironmentalComponent" referenceName="composedOf">
+                      <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="new Environmental"/>
+                      <subModelOperations xsi:type="tool_1:SetValue" featureName="isPartOf" valueExpression="var:container"/>
+                      <subModelOperations xsi:type="tool_1:Let" variableName="newEnvironment" valueExpression="var:self"/>
+                      <subModelOperations xsi:type="tool_1:CreateInstance" typeName="scml::Location" referenceName="location">
+                        <subModelOperations xsi:type="tool_1:SetValue" featureName="Lat" valueExpression="0.0"/>
+                        <subModelOperations xsi:type="tool_1:SetValue" featureName="Long" valueExpression="0.0"/>
+                      </subModelOperations>
+                      <subModelOperations xsi:type="properties:DialogModelOperation" titleExpression="New Environment">
+                        <buttons labelExpression="Cancel" closeDialogOnClick="true" rollbackChangesOnClose="true">
+                          <initialOperation/>
+                        </buttons>
+                        <buttons labelExpression="OK" default="true" closeDialogOnClick="true">
+                          <initialOperation/>
+                        </buttons>
+                        <page name="Default Page" labelExpression="Create new Infrastructure" semanticCandidateExpression="var:self" groups="//@ownedViewpoints[name='Planning_Viewpoint']/@ownedRepresentations[name='SC_Planning_Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='EnvironmentalComponent']/@initialOperation/@firstModelOperations/@subModelOperations.0/@cases.0/@subModelOperations.0/@subModelOperations.4/@groups.0 //@ownedViewpoints[name='Planning_Viewpoint']/@ownedRepresentations[name='SC_Planning_Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='EnvironmentalComponent']/@initialOperation/@firstModelOperations/@subModelOperations.0/@cases.0/@subModelOperations.0/@subModelOperations.4/@groups.1"/>
+                        <groups name="Name" labelExpression="Name" semanticCandidateExpression="var:self">
+                          <controls xsi:type="properties:TextDescription" name="Name" valueExpression="feature:name">
+                            <initialOperation>
+                              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:self">
+                                <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="aql:newValue"/>
+                              </firstModelOperations>
+                            </initialOperation>
+                          </controls>
+                        </groups>
+                        <groups name="Location" labelExpression="Group" semanticCandidateExpression="var:self">
+                          <controls xsi:type="properties:TextDescription" name="Lat" labelExpression="Lat" valueExpression="aql:self.location.Lat">
+                            <initialOperation>
+                              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql: self.location">
+                                <subModelOperations xsi:type="tool_1:SetValue" featureName="Lat" valueExpression="aql:newValue"/>
+                              </firstModelOperations>
+                            </initialOperation>
+                          </controls>
+                          <controls xsi:type="properties:TextDescription" name="Long" labelExpression="Long" valueExpression="aql:self.location.Long">
+                            <initialOperation>
+                              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql: self.location">
+                                <subModelOperations xsi:type="tool_1:SetValue" featureName="Long" valueExpression="aql:newValue"/>
+                              </firstModelOperations>
+                            </initialOperation>
+                          </controls>
+                        </groups>
+                      </subModelOperations>
+                    </subModelOperations>
+                    <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[self.eContainer() /]">
+                      <subModelOperations xsi:type="tool_1:SetValue" featureName="component" valueExpression="var:newEnvironment"/>
+                    </subModelOperations>
+                  </cases>
+                  <default>
+                    <subModelOperations xsi:type="tool_1:CreateInstance" typeName="scml::EnvironmentalComponent" referenceName="component">
+                      <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="new Environmental"/>
+                      <subModelOperations xsi:type="tool_1:CreateInstance" typeName="scml::Location" referenceName="location">
+                        <subModelOperations xsi:type="tool_1:SetValue" featureName="Lat" valueExpression="0.0"/>
+                        <subModelOperations xsi:type="tool_1:SetValue" featureName="Long" valueExpression="0.0"/>
+                      </subModelOperations>
+                      <subModelOperations xsi:type="properties:DialogModelOperation" titleExpression="New Environment">
+                        <buttons labelExpression="Cancel" closeDialogOnClick="true" rollbackChangesOnClose="true">
+                          <initialOperation/>
+                        </buttons>
+                        <buttons labelExpression="OK" default="true" closeDialogOnClick="true">
+                          <initialOperation/>
+                        </buttons>
+                        <page name="Default Page" labelExpression="Create new Infrastructure" semanticCandidateExpression="var:self" groups="//@ownedViewpoints[name='Planning_Viewpoint']/@ownedRepresentations[name='SC_Planning_Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='EnvironmentalComponent']/@initialOperation/@firstModelOperations/@subModelOperations.0/@default/@subModelOperations.0/@subModelOperations.2/@groups.0 //@ownedViewpoints[name='Planning_Viewpoint']/@ownedRepresentations[name='SC_Planning_Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='EnvironmentalComponent']/@initialOperation/@firstModelOperations/@subModelOperations.0/@default/@subModelOperations.0/@subModelOperations.2/@groups.1"/>
+                        <groups name="Name" labelExpression="Name" semanticCandidateExpression="var:self">
+                          <controls xsi:type="properties:TextDescription" name="Name" valueExpression="feature:name">
+                            <initialOperation>
+                              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:self">
+                                <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="aql:newValue"/>
+                              </firstModelOperations>
+                            </initialOperation>
+                          </controls>
+                        </groups>
+                        <groups name="Location" labelExpression="Group" semanticCandidateExpression="var:self">
+                          <controls xsi:type="properties:TextDescription" name="Lat" labelExpression="Lat" valueExpression="aql:self.location.Lat">
+                            <initialOperation>
+                              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql: self.location">
+                                <subModelOperations xsi:type="tool_1:SetValue" featureName="Lat" valueExpression="aql:newValue"/>
+                              </firstModelOperations>
+                            </initialOperation>
+                          </controls>
+                          <controls xsi:type="properties:TextDescription" name="Long" labelExpression="Long" valueExpression="aql:self.location.Long">
+                            <initialOperation>
+                              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql: self.location">
+                                <subModelOperations xsi:type="tool_1:SetValue" featureName="Long" valueExpression="aql:newValue"/>
+                              </firstModelOperations>
+                            </initialOperation>
+                          </controls>
+                        </groups>
+                      </subModelOperations>
+                    </subModelOperations>
+                  </default>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+        </toolSections>
+        <toolSections name="Device">
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Actuator" nodeMappings="//@ownedViewpoints[name='Planning_Viewpoint']/@ownedRepresentations[name='SC_Planning_Diagram']/@defaultLayer/@containerMappings[name='Project']/@subContainerMappings[name='ParentInfrastructure']/@borderedNodeMappings[name='ParentDevice'] //@ownedViewpoints[name='Planning_Viewpoint']/@ownedRepresentations[name='SC_Planning_Diagram']/@defaultLayer/@containerMappings[name='Project']/@subContainerMappings[name='ParentInfrastructure']/@subContainerMappings[name='ChildInfrastructure']/@borderedNodeMappings[name='ChildDevice']" iconPath="/scml.design/img/monitor.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:CreateInstance" typeName="scml::Actuator" referenceName="device">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="new Actuator"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Sensor" nodeMappings="//@ownedViewpoints[name='Planning_Viewpoint']/@ownedRepresentations[name='SC_Planning_Diagram']/@defaultLayer/@containerMappings[name='Project']/@subContainerMappings[name='ParentInfrastructure']/@borderedNodeMappings[name='ParentDevice'] //@ownedViewpoints[name='Planning_Viewpoint']/@ownedRepresentations[name='SC_Planning_Diagram']/@defaultLayer/@containerMappings[name='Project']/@subContainerMappings[name='ParentInfrastructure']/@subContainerMappings[name='ChildInfrastructure']/@borderedNodeMappings[name='ChildDevice']" iconPath="/scml.design/img/monitor.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:CreateInstance" typeName="scml::Sensor" referenceName="device">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="new Sensor"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+        </toolSections>
+        <toolSections name="Category">
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Category" nodeMappings="//@ownedViewpoints[name='Planning_Viewpoint']/@ownedRepresentations[name='SC_Planning_Diagram']/@defaultLayer/@nodeMappings[name='Category']" iconPath="/scml.design/img/categories.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:CreateInstance" typeName="scml::Category" referenceName="category">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="newCategory"/>
+                <subModelOperations xsi:type="properties:DialogModelOperation" titleExpression="New Category">
+                  <buttons labelExpression="Cancel" closeDialogOnClick="true" rollbackChangesOnClose="true">
+                    <initialOperation/>
+                  </buttons>
+                  <buttons labelExpression="OK" default="true" closeDialogOnClick="true">
+                    <initialOperation/>
+                  </buttons>
+                  <page name="Default Page" labelExpression="Page" semanticCandidateExpression="var:self" groups="//@ownedViewpoints[name='Planning_Viewpoint']/@ownedRepresentations[name='SC_Planning_Diagram']/@defaultLayer/@toolSections.2/@ownedTools[name='Category']/@initialOperation/@firstModelOperations/@subModelOperations.1/@groups.0"/>
+                  <groups name="Default Group" labelExpression="Group" semanticCandidateExpression="var:self">
+                    <controls xsi:type="properties:TextDescription" name="Name" labelExpression="Name" valueExpression="feature:name">
+                      <initialOperation>
+                        <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:self">
+                          <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="aql:newValue"/>
+                        </firstModelOperations>
+                      </initialOperation>
+                    </controls>
+                    <controls xsi:type="properties:ListDescription" name="SDGs" labelExpression="SDGs" valueExpression="aql: self.SDG" displayExpression="aql: value.toString()">
+                      <actions labelExpression="Add SDG">
+                        <initialOperation>
+                          <firstModelOperations xsi:type="properties:DialogModelOperation" titleExpression="Add SDG">
+                            <buttons labelExpression="Cancel" closeDialogOnClick="true" rollbackChangesOnClose="true">
+                              <initialOperation/>
+                            </buttons>
+                            <buttons labelExpression="OK" default="true" closeDialogOnClick="true">
+                              <initialOperation/>
+                            </buttons>
+                            <page name="New SDG" labelExpression="Page" semanticCandidateExpression="var:self" groups="//@ownedViewpoints[name='Planning_Viewpoint']/@ownedRepresentations[name='SC_Planning_Diagram']/@defaultLayer/@toolSections.2/@ownedTools[name='Category']/@initialOperation/@firstModelOperations/@subModelOperations.1/@groups.0/@controls.1/@actions.0/@initialOperation/@firstModelOperations/@groups.0"/>
+                            <groups name="SDG" labelExpression="Group" semanticCandidateExpression="var:self">
+                              <controls xsi:type="properties:TextDescription" name="SDGNumber" labelExpression="SDG Number">
+                                <initialOperation>
+                                  <firstModelOperations xsi:type="tool_1:SetValue" featureName="SDG" valueExpression="aql: self.SDG + Sequence{newValue.toInteger()}"/>
+                                </initialOperation>
+                              </controls>
+                            </groups>
+                          </firstModelOperations>
+                        </initialOperation>
+                      </actions>
+                    </controls>
+                  </groups>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="Category-Project Edge" edgeMappings="//@ownedViewpoints[name='Planning_Viewpoint']/@ownedRepresentations[name='SC_Planning_Diagram']/@defaultLayer/@edgeMappings[name='CategoryProject']" iconPath="/scml.design/img/categories.png">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:target">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="category" valueExpression="var:source"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+        </toolSections>
+      </defaultLayer>
+    </ownedRepresentations>
+  </ownedViewpoints>
+  <ownedViewpoints name="Measuring_Viewpoint">
+    <ownedRepresentations xsi:type="description_1:DiagramDescription" name="SC_Project_Measuring_Diagram" domainClass="scml::Project" enablePopupBars="true">
+      <defaultLayer name="Default">
+        <nodeMappings name="Basis" semanticCandidatesExpression="aql: self.component.parameter.goalreferencevalue.basis" domainClass="scml::Basis">
+          <style xsi:type="style:SquareDescription" labelSize="12" labelExpression="aql: '(' + self.principleType + ') ' + self.source" iconPath="/scml.design/img/base.png" labelPosition="node" resizeKind="NSEW">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
+          </style>
+        </nodeMappings>
+        <nodeMappings name="AggregatedValue" semanticCandidatesExpression="aql: self.component.parameter.observedValue" domainClass="scml::AggregatedValue">
+          <style xsi:type="style:EllipseNodeDescription" labelSize="12" labelExpression="aql: self.aggregator + '\n' + self.aggregatedTime" iconPath="/scml.design/img/aggregation.png" labelPosition="node" resizeKind="NSEW">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='orange']"/>
+          </style>
+        </nodeMappings>
+        <nodeMappings name="InfrastructureComponent" semanticCandidatesExpression="feature:component" domainClass="scml::InfrastructureComponent">
+          <conditionnalStyles predicateExpression="[self.oclIsTypeOf(scml::BuildingComponent) /]">
+            <style xsi:type="style:EllipseNodeDescription" labelSize="12" iconPath="/scml.design/img/building.png" labelPosition="node" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            </style>
+          </conditionnalStyles>
+          <conditionnalStyles predicateExpression="[self.oclIsTypeOf(scml::TransportationComponent) /]">
+            <style xsi:type="style:EllipseNodeDescription" labelSize="12" iconPath="/scml.design/img/public-transport.png" labelPosition="node" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_red']"/>
+            </style>
+          </conditionnalStyles>
+          <conditionnalStyles predicateExpression="[self.oclIsTypeOf(scml::EnvironmentalComponent) /]">
+            <style xsi:type="style:EllipseNodeDescription" labelSize="12" iconPath="/scml.design/img/forest.png" labelPosition="node" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='chocolate']"/>
+            </style>
+          </conditionnalStyles>
+        </nodeMappings>
+        <nodeMappings name="ParameterWithoutKPI" semanticCandidatesExpression="aql: self.component.parameter -> select(p | not self.indicator.parameter -> includes(p))" domainClass="scml::Parameter">
+          <style xsi:type="style:SquareDescription" labelSize="12" labelExpression="aql: '[' + self.type + ']' + '\n' + self.name + '\n' + self.unit" iconPath="/scml.design/img/parameter.png" labelPosition="node" resizeKind="NSEW">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+          </style>
+        </nodeMappings>
+        <edgeMappings name="DataProdcued" sourceMapping="//@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@nodeMappings[name='InfrastructureComponent']" targetMapping="//@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@containerMappings[name='KPI']/@subContainerMappings[name='Parameter'] //@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@nodeMappings[name='ParameterWithoutKPI']" targetFinderExpression="aql: self.eContainer().parameter" sourceFinderExpression="feature:eContainer" domainClass="scml::DataValue" useDomainElement="true">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <endLabelStyleDescription labelSize="12" labelExpression="aql: '[' + self.type + '] ' + self.value" iconPath="/scml.design/img/datavalue.png">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </endLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="GoalReferenceValue" sourceMapping="//@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@containerMappings[name='KPI']/@subContainerMappings[name='Parameter'] //@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@nodeMappings[name='ParameterWithoutKPI']" targetMapping="//@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@nodeMappings[name='Basis']" targetFinderExpression="feature:basis" sourceFinderExpression="feature:eContainer" domainClass="scml::GoalReferenceValue" useDomainElement="true">
+          <style lineStyle="dash" sourceArrow="InputArrow" targetArrow="NoDecoration" sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <centerLabelStyleDescription labelSize="12" showIcon="false" labelExpression="aql: '[' + self.type + '] ' + self.value">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="observedValue" sourceMapping="//@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@containerMappings[name='KPI']/@subContainerMappings[name='Parameter'] //@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@nodeMappings[name='ParameterWithoutKPI']" targetMapping="//@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@nodeMappings[name='AggregatedValue']" targetFinderExpression="feature:observedValue">
+          <style sourceArrow="InputArrow" targetArrow="NoDecoration" sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <centerLabelStyleDescription labelSize="12" showIcon="false" labelExpression="aql: '[' + self.observedValue.type + '] ' + self.observedValue.value">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <containerMappings name="KPI" semanticCandidatesExpression="feature:indicator" domainClass="scml::KPIMeasurementDevice">
+          <subContainerMappings name="Parameter" semanticCandidatesExpression="feature:parameter" domainClass="scml::Parameter">
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="aql: '[' + self.type + ']' + '\n' + self.name + '\n' + self.unit" iconPath="/scml.design/img/parameter.png">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            </style>
+          </subContainerMappings>
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" iconPath="/scml.design/img/kpi.png">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
+          </style>
+          <conditionnalStyles predicateExpression="[self.status = scml::Status::CRITICAL /]">
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="aql: self.name + ' - ' + self.nextCalculation" iconPath="/scml.design/img/kpi.png">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelFormat>bold</labelFormat>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_red']"/>
+            </style>
+          </conditionnalStyles>
+          <conditionnalStyles predicateExpression="[self.status = scml::Status::WARN /]">
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="aql: self.name + ' - ' + self.nextCalculation" iconPath="/scml.design/img/kpi.png">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelFormat>bold</labelFormat>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_orange']"/>
+            </style>
+          </conditionnalStyles>
+          <conditionnalStyles predicateExpression="[self.status = scml::Status::GOOD /]">
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="aql: self.name + ' - ' + self.nextCalculation" iconPath="/scml.design/img/kpi.png">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelFormat>bold</labelFormat>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_green']"/>
+            </style>
+          </conditionnalStyles>
+        </containerMappings>
+        <toolSections name="Elements">
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="KPI" containerMappings="//@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@containerMappings[name='KPI']" iconPath="/scml.design/img/kpi.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:CreateInstance" typeName="scml::KPIMeasurementDevice" referenceName="indicator">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="aql:  'measurement_new'"/>
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="nextCalculation" valueExpression="aql: '2023-12-13T00:00:00.000+0200'"/>
+                <subModelOperations xsi:type="properties:DialogModelOperation" titleExpression="New Dialog">
+                  <buttons labelExpression="Cancel" closeDialogOnClick="true" rollbackChangesOnClose="true">
+                    <initialOperation/>
+                  </buttons>
+                  <buttons labelExpression="OK" default="true" closeDialogOnClick="true">
+                    <initialOperation/>
+                  </buttons>
+                  <page name="Default Page" labelExpression="Page" semanticCandidateExpression="var:self" groups="//@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='KPI']/@initialOperation/@firstModelOperations/@subModelOperations.2/@groups.0"/>
+                  <groups name="Default Group" labelExpression="Group" semanticCandidateExpression="var:self">
+                    <controls xsi:type="properties:TextDescription" name="KPIname" labelExpression="Name" valueExpression="feature:name">
+                      <initialOperation>
+                        <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:self">
+                          <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="aql:newValue"/>
+                        </firstModelOperations>
+                      </initialOperation>
+                    </controls>
+                    <controls xsi:type="properties:TextDescription" name="KPInextCalculation" labelExpression="next Calculation" valueExpression="aql:self.nextCalculation">
+                      <initialOperation>
+                        <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:self">
+                          <subModelOperations xsi:type="tool_1:SetValue" featureName="nextCalculation" valueExpression="aql:newValue"/>
+                        </firstModelOperations>
+                      </initialOperation>
+                    </controls>
+                  </groups>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Parameter" nodeMappings="//@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@nodeMappings[name='ParameterWithoutKPI']" iconPath="/scml.design/img/parameter.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="properties:DialogModelOperation" titleExpression="Select InfrastructureComponent">
+                <buttons labelExpression="Cancel" closeDialogOnClick="true" rollbackChangesOnClose="true">
+                  <initialOperation/>
+                </buttons>
+                <buttons labelExpression="OK" default="true" closeDialogOnClick="true">
+                  <initialOperation/>
+                </buttons>
+                <page name="Default Page" labelExpression="Page" semanticCandidateExpression="var:self" groups="//@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Parameter']/@initialOperation/@firstModelOperations/@groups.0"/>
+                <groups name="Default Group" labelExpression="Group" semanticCandidateExpression="var:self">
+                  <controls xsi:type="properties:SelectDescription" labelExpression="Select Infrastructure Component" candidatesExpression="aql: self.component" candidateDisplayExpression="aql: candidate.name">
+                    <initialOperation>
+                      <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql: newValue">
+                        <subModelOperations xsi:type="tool_1:Let" variableName="selectedinfra" valueExpression="aql: newValue"/>
+                        <subModelOperations xsi:type="tool_1:CreateInstance" typeName="scml::Parameter" referenceName="parameter">
+                          <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="new Parameter"/>
+                          <subModelOperations xsi:type="tool_1:SetValue" featureName="unit" valueExpression="temp unit"/>
+                          <subModelOperations xsi:type="tool_1:SetValue" featureName="component" valueExpression="aql: selectedinfra"/>
+                          <subModelOperations xsi:type="properties:DialogModelOperation" titleExpression="New Parameter">
+                            <buttons labelExpression="Cancel" closeDialogOnClick="true" rollbackChangesOnClose="true">
+                              <initialOperation/>
+                            </buttons>
+                            <buttons labelExpression="OK" default="true" closeDialogOnClick="true">
+                              <initialOperation/>
+                            </buttons>
+                            <page name="Default Page" labelExpression="Page" semanticCandidateExpression="var:self" groups="//@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Parameter']/@initialOperation/@firstModelOperations/@groups.0/@controls.0/@initialOperation/@firstModelOperations/@subModelOperations.1/@subModelOperations.3/@groups.0"/>
+                            <groups name="Default Group" labelExpression="Group" semanticCandidateExpression="var:self">
+                              <controls xsi:type="properties:TextDescription" name="Name" labelExpression="Name" valueExpression="feature:name">
+                                <initialOperation>
+                                  <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:self">
+                                    <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="aql:newValue"/>
+                                  </firstModelOperations>
+                                </initialOperation>
+                              </controls>
+                              <controls xsi:type="properties:TextDescription" name="Unit" labelExpression="Unit" valueExpression="feature:unit">
+                                <initialOperation>
+                                  <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:self">
+                                    <subModelOperations xsi:type="tool_1:SetValue" featureName="unit" valueExpression="aql:newValue"/>
+                                  </firstModelOperations>
+                                </initialOperation>
+                              </controls>
+                              <controls xsi:type="properties:SelectDescription" labelExpression="Select KPI" candidatesExpression="aql: container.indicator" candidateDisplayExpression="aql: candidate.name">
+                                <initialOperation>
+                                  <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql: newValue">
+                                    <subModelOperations xsi:type="tool_1:SetValue" featureName="parameter" valueExpression="var:instance"/>
+                                  </firstModelOperations>
+                                </initialOperation>
+                              </controls>
+                              <controls xsi:type="properties:ListDescription" name="DataValues" labelExpression="Data Values:" valueExpression="aql: selectedinfra.produces" displayExpression="aql: value.value">
+                                <actions labelExpression="Add Data Value">
+                                  <initialOperation>
+                                    <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:selectedinfra">
+                                      <subModelOperations xsi:type="tool_1:CreateInstance" typeName="scml::DataValue" referenceName="produces">
+                                        <subModelOperations xsi:type="properties:DialogModelOperation" titleExpression="Create Data Value">
+                                          <buttons labelExpression="Cancel" closeDialogOnClick="true" rollbackChangesOnClose="true">
+                                            <initialOperation/>
+                                          </buttons>
+                                          <buttons labelExpression="OK" default="true" closeDialogOnClick="true">
+                                            <initialOperation/>
+                                          </buttons>
+                                          <page name="Default Page" labelExpression="Page" semanticCandidateExpression="var:self" groups="//@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Parameter']/@initialOperation/@firstModelOperations/@groups.0/@controls.0/@initialOperation/@firstModelOperations/@subModelOperations.1/@subModelOperations.3/@groups.0/@controls.3/@actions.0/@initialOperation/@firstModelOperations/@subModelOperations.0/@subModelOperations.0/@groups.0"/>
+                                          <groups name="Default Group" labelExpression="Group" semanticCandidateExpression="var:self">
+                                            <controls xsi:type="properties:TextDescription" name="Value" labelExpression="Value" valueExpression="aql: self.value">
+                                              <initialOperation>
+                                                <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:self">
+                                                  <subModelOperations xsi:type="tool_1:SetValue" featureName="value" valueExpression="aql:newValue"/>
+                                                </firstModelOperations>
+                                              </initialOperation>
+                                            </controls>
+                                          </groups>
+                                        </subModelOperations>
+                                      </subModelOperations>
+                                    </firstModelOperations>
+                                  </initialOperation>
+                                </actions>
+                              </controls>
+                            </groups>
+                          </subModelOperations>
+                        </subModelOperations>
+                      </firstModelOperations>
+                    </initialOperation>
+                  </controls>
+                </groups>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="BuildingComponent" nodeMappings="//@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@nodeMappings[name='InfrastructureComponent']" iconPath="/scml.design/img/building.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:CreateInstance" typeName="scml::BuildingComponent" referenceName="component">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="new Builidng"/>
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="scml::Location" referenceName="location">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="Lat" valueExpression="0.0"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="Long" valueExpression="0.0"/>
+                </subModelOperations>
+                <subModelOperations xsi:type="properties:DialogModelOperation" titleExpression="New Builidng">
+                  <buttons labelExpression="Cancel" closeDialogOnClick="true" rollbackChangesOnClose="true">
+                    <initialOperation/>
+                  </buttons>
+                  <buttons labelExpression="OK" default="true" closeDialogOnClick="true">
+                    <initialOperation/>
+                  </buttons>
+                  <page name="Default Page" labelExpression="Create new Infrastructure" semanticCandidateExpression="var:self" groups="//@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='BuildingComponent']/@initialOperation/@firstModelOperations/@subModelOperations.2/@groups.0 //@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='BuildingComponent']/@initialOperation/@firstModelOperations/@subModelOperations.2/@groups.1"/>
+                  <groups name="Name" labelExpression="Name" semanticCandidateExpression="var:self">
+                    <controls xsi:type="properties:TextDescription" name="Name" valueExpression="feature:name">
+                      <initialOperation>
+                        <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:self">
+                          <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="aql:newValue"/>
+                        </firstModelOperations>
+                      </initialOperation>
+                    </controls>
+                  </groups>
+                  <groups name="Location" labelExpression="Location" semanticCandidateExpression="var:self">
+                    <controls xsi:type="properties:TextDescription" name="Lat" labelExpression="Lat" valueExpression="aql:self.location.Lat">
+                      <initialOperation>
+                        <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql: self.location">
+                          <subModelOperations xsi:type="tool_1:SetValue" featureName="Lat" valueExpression="aql:newValue"/>
+                        </firstModelOperations>
+                      </initialOperation>
+                    </controls>
+                    <controls xsi:type="properties:TextDescription" name="Long" labelExpression="Long" valueExpression="aql:self.location.Long">
+                      <initialOperation>
+                        <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql: self.location">
+                          <subModelOperations xsi:type="tool_1:SetValue" featureName="Long" valueExpression="aql:newValue"/>
+                        </firstModelOperations>
+                      </initialOperation>
+                    </controls>
+                  </groups>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="TransportationComponent" nodeMappings="//@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@nodeMappings[name='InfrastructureComponent']" iconPath="/scml.design/img/public-transport.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:CreateInstance" typeName="scml::TransportationComponent" referenceName="component">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="new Transportation"/>
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="scml::Location" referenceName="location">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="Lat" valueExpression="0.0"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="Long" valueExpression="0.0"/>
+                </subModelOperations>
+                <subModelOperations xsi:type="properties:DialogModelOperation" titleExpression="New Transportation">
+                  <buttons labelExpression="Cancel" closeDialogOnClick="true" rollbackChangesOnClose="true">
+                    <initialOperation/>
+                  </buttons>
+                  <buttons labelExpression="OK" default="true" closeDialogOnClick="true">
+                    <initialOperation/>
+                  </buttons>
+                  <page name="Default Page" labelExpression="Create new Infrastructure" semanticCandidateExpression="var:self" groups="//@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='TransportationComponent']/@initialOperation/@firstModelOperations/@subModelOperations.2/@groups.0 //@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='TransportationComponent']/@initialOperation/@firstModelOperations/@subModelOperations.2/@groups.1"/>
+                  <groups name="Name" labelExpression="Name" semanticCandidateExpression="var:self">
+                    <controls xsi:type="properties:TextDescription" name="Name" valueExpression="feature:name">
+                      <initialOperation>
+                        <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:self">
+                          <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="aql:newValue"/>
+                        </firstModelOperations>
+                      </initialOperation>
+                    </controls>
+                  </groups>
+                  <groups name="Location" labelExpression="Location" semanticCandidateExpression="var:self">
+                    <controls xsi:type="properties:TextDescription" name="Lat" labelExpression="Lat" valueExpression="aql:self.location.Lat">
+                      <initialOperation>
+                        <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql: self.location">
+                          <subModelOperations xsi:type="tool_1:SetValue" featureName="Lat" valueExpression="aql:newValue"/>
+                        </firstModelOperations>
+                      </initialOperation>
+                    </controls>
+                    <controls xsi:type="properties:TextDescription" name="Long" labelExpression="Long" valueExpression="aql:self.location.Long">
+                      <initialOperation>
+                        <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql: self.location">
+                          <subModelOperations xsi:type="tool_1:SetValue" featureName="Long" valueExpression="aql:newValue"/>
+                        </firstModelOperations>
+                      </initialOperation>
+                    </controls>
+                  </groups>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="EnvironmentalComponent" nodeMappings="//@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@nodeMappings[name='InfrastructureComponent']" iconPath="/scml.design/img/forest.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:CreateInstance" typeName="scml::EnvironmentalComponent" referenceName="component">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="new Environmental"/>
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="scml::Location" referenceName="location">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="Lat" valueExpression="0.0"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="Long" valueExpression="0.0"/>
+                </subModelOperations>
+                <subModelOperations xsi:type="properties:DialogModelOperation" titleExpression="New Environmental">
+                  <buttons labelExpression="Cancel" closeDialogOnClick="true" rollbackChangesOnClose="true">
+                    <initialOperation/>
+                  </buttons>
+                  <buttons labelExpression="OK" default="true" closeDialogOnClick="true">
+                    <initialOperation/>
+                  </buttons>
+                  <page name="Default Page" labelExpression="Create new Infrastructure" semanticCandidateExpression="var:self" groups="//@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='EnvironmentalComponent']/@initialOperation/@firstModelOperations/@subModelOperations.2/@groups.0 //@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='EnvironmentalComponent']/@initialOperation/@firstModelOperations/@subModelOperations.2/@groups.1"/>
+                  <groups name="Name" labelExpression="Name" semanticCandidateExpression="var:self">
+                    <controls xsi:type="properties:TextDescription" name="Name" valueExpression="feature:name">
+                      <initialOperation>
+                        <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:self">
+                          <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="aql:newValue"/>
+                        </firstModelOperations>
+                      </initialOperation>
+                    </controls>
+                  </groups>
+                  <groups name="Location" labelExpression="Location" semanticCandidateExpression="var:self">
+                    <controls xsi:type="properties:TextDescription" name="Lat" labelExpression="Lat" valueExpression="aql:self.location.Lat">
+                      <initialOperation>
+                        <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql: self.location">
+                          <subModelOperations xsi:type="tool_1:SetValue" featureName="Lat" valueExpression="aql:newValue"/>
+                        </firstModelOperations>
+                      </initialOperation>
+                    </controls>
+                    <controls xsi:type="properties:TextDescription" name="Long" labelExpression="Long" valueExpression="aql:self.location.Long">
+                      <initialOperation>
+                        <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql: self.location">
+                          <subModelOperations xsi:type="tool_1:SetValue" featureName="Long" valueExpression="aql:newValue"/>
+                        </firstModelOperations>
+                      </initialOperation>
+                    </controls>
+                  </groups>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+        </toolSections>
+        <toolSections name="Values">
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="DataProdcued" edgeMappings="//@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@edgeMappings[name='DataProdcued']" iconPath="/scml.design/img/datavalue.png">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:source">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="scml::DataValue" referenceName="produces">
+                  <subModelOperations xsi:type="properties:DialogModelOperation" titleExpression="New DataValue">
+                    <buttons labelExpression="Cancel" closeDialogOnClick="true" rollbackChangesOnClose="true">
+                      <initialOperation/>
+                    </buttons>
+                    <buttons labelExpression="OK" default="true" closeDialogOnClick="true">
+                      <initialOperation/>
+                    </buttons>
+                    <page name="Default Page" labelExpression="Page" semanticCandidateExpression="var:self" groups="//@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@toolSections.1/@ownedTools[name='DataProdcued']/@initialOperation/@firstModelOperations/@subModelOperations.0/@subModelOperations.0/@groups.0"/>
+                    <groups name="Default Group" labelExpression="Group" semanticCandidateExpression="var:self">
+                      <controls xsi:type="properties:TextDescription" name="Value" labelExpression="Value" valueExpression="aql: self.value">
+                        <initialOperation>
+                          <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:self">
+                            <subModelOperations xsi:type="tool_1:SetValue" featureName="value" valueExpression="aql:newValue"/>
+                          </firstModelOperations>
+                        </initialOperation>
+                      </controls>
+                    </groups>
+                  </subModelOperations>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="AggregatedValue" nodeMappings="//@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@nodeMappings[name='AggregatedValue']" iconPath="/scml.design/img/aggregation.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="properties:DialogModelOperation" titleExpression="New Dialog">
+                <buttons labelExpression="Cancel" closeDialogOnClick="true" rollbackChangesOnClose="true">
+                  <initialOperation/>
+                </buttons>
+                <buttons labelExpression="OK" default="true" closeDialogOnClick="true">
+                  <initialOperation/>
+                </buttons>
+                <page name="Default Page" labelExpression="Page" semanticCandidateExpression="var:self" groups="//@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@toolSections.1/@ownedTools[name='AggregatedValue']/@initialOperation/@firstModelOperations/@groups.0"/>
+                <groups name="Default Group" labelExpression="Group" semanticCandidateExpression="var:self">
+                  <controls xsi:type="properties:SelectDescription" candidatesExpression="aql: self.component.parameter" candidateDisplayExpression="aql: candidate.name">
+                    <initialOperation>
+                      <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:newValue">
+                        <subModelOperations xsi:type="tool_1:CreateInstance" typeName="scml::AggregatedValue" referenceName="observedValue">
+                          <subModelOperations xsi:type="tool_1:SetValue" featureName="aggregatedTime" valueExpression="aql: '2023-09-13T00:00:00.000+0200'"/>
+                          <subModelOperations xsi:type="properties:DialogModelOperation" titleExpression="New AggregatedValue">
+                            <buttons labelExpression="Cancel" closeDialogOnClick="true" rollbackChangesOnClose="true">
+                              <initialOperation/>
+                            </buttons>
+                            <buttons labelExpression="OK" default="true" closeDialogOnClick="true">
+                              <initialOperation>
+                                <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:instance"/>
+                              </initialOperation>
+                            </buttons>
+                            <page name="Default Page" labelExpression="Page" semanticCandidateExpression="var:self" groups="//@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@toolSections.1/@ownedTools[name='AggregatedValue']/@initialOperation/@firstModelOperations/@groups.0/@controls.0/@initialOperation/@firstModelOperations/@subModelOperations.0/@subModelOperations.1/@groups.0"/>
+                            <groups name="Default Group" labelExpression="Group" semanticCandidateExpression="var:self">
+                              <controls xsi:type="properties:TextDescription" name="Value" labelExpression="Value" valueExpression="aql: self.value">
+                                <initialOperation>
+                                  <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:self">
+                                    <subModelOperations xsi:type="tool_1:SetValue" featureName="value" valueExpression="aql:newValue"/>
+                                  </firstModelOperations>
+                                </initialOperation>
+                              </controls>
+                              <controls xsi:type="properties:TextDescription" name="aggregatedTime" labelExpression="aggregated Time" valueExpression="aql:self.aggregatedTime">
+                                <initialOperation>
+                                  <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:self">
+                                    <subModelOperations xsi:type="tool_1:SetValue" featureName="aggregatedTime" valueExpression="aql:newValue"/>
+                                  </firstModelOperations>
+                                </initialOperation>
+                              </controls>
+                            </groups>
+                          </subModelOperations>
+                        </subModelOperations>
+                      </firstModelOperations>
+                    </initialOperation>
+                  </controls>
+                </groups>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="GoalReferenceValue+Basis" nodeMappings="//@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@nodeMappings[name='Basis']" iconPath="/scml.design/img/base.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="properties:DialogModelOperation" titleExpression="Select Parameter">
+                <buttons labelExpression="Cancel" closeDialogOnClick="true" rollbackChangesOnClose="true">
+                  <initialOperation/>
+                </buttons>
+                <buttons labelExpression="OK" default="true" closeDialogOnClick="true">
+                  <initialOperation/>
+                </buttons>
+                <page name="Default Page" labelExpression="Page" semanticCandidateExpression="var:self" groups="//@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@toolSections.1/@ownedTools[name='GoalReferenceValue+Basis']/@initialOperation/@firstModelOperations/@groups.0"/>
+                <groups name="Default Group" labelExpression="Group" semanticCandidateExpression="var:self">
+                  <controls xsi:type="properties:SelectDescription" candidatesExpression="aql: self.component.parameter" candidateDisplayExpression="aql: candidate.name">
+                    <initialOperation>
+                      <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:newValue">
+                        <subModelOperations xsi:type="tool_1:CreateInstance" typeName="scml::GoalReferenceValue" referenceName="goalreferencevalue">
+                          <subModelOperations xsi:type="tool_1:CreateInstance" typeName="scml::Basis" referenceName="basis"/>
+                          <subModelOperations xsi:type="properties:DialogModelOperation" titleExpression="New GoalReferenceValue">
+                            <buttons labelExpression="Cancel" closeDialogOnClick="true" rollbackChangesOnClose="true">
+                              <initialOperation/>
+                            </buttons>
+                            <buttons labelExpression="OK" default="true" closeDialogOnClick="true">
+                              <initialOperation>
+                                <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:instance"/>
+                              </initialOperation>
+                            </buttons>
+                            <page name="Default Page" labelExpression="Create new Goal Reference Value with Basis" semanticCandidateExpression="var:self" groups="//@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@toolSections.1/@ownedTools[name='GoalReferenceValue+Basis']/@initialOperation/@firstModelOperations/@groups.0/@controls.0/@initialOperation/@firstModelOperations/@subModelOperations.0/@subModelOperations.1/@groups.0 //@ownedViewpoints[name='Measuring_Viewpoint']/@ownedRepresentations[name='SC_Project_Measuring_Diagram']/@defaultLayer/@toolSections.1/@ownedTools[name='GoalReferenceValue+Basis']/@initialOperation/@firstModelOperations/@groups.0/@controls.0/@initialOperation/@firstModelOperations/@subModelOperations.0/@subModelOperations.1/@groups.1"/>
+                            <groups name="GoalReferenceValue" labelExpression="Goal Reference Value" semanticCandidateExpression="var:self">
+                              <controls xsi:type="properties:TextDescription" name="Value" labelExpression="Value" valueExpression="aql: self.value">
+                                <initialOperation>
+                                  <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:self">
+                                    <subModelOperations xsi:type="tool_1:SetValue" featureName="value" valueExpression="aql:newValue"/>
+                                  </firstModelOperations>
+                                </initialOperation>
+                              </controls>
+                            </groups>
+                            <groups name="Basis" labelExpression="Basis">
+                              <controls xsi:type="properties:TextDescription" name="source" labelExpression="source">
+                                <initialOperation>
+                                  <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql: self.basis">
+                                    <subModelOperations xsi:type="tool_1:SetValue" featureName="source" valueExpression="aql:newValue"/>
+                                  </firstModelOperations>
+                                </initialOperation>
+                              </controls>
+                              <controls xsi:type="properties:TextAreaDescription" name="description" labelExpression="description" lineCount="3">
+                                <initialOperation>
+                                  <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql: self.basis">
+                                    <subModelOperations xsi:type="tool_1:SetValue" featureName="description" valueExpression="aql:newValue"/>
+                                  </firstModelOperations>
+                                </initialOperation>
+                              </controls>
+                            </groups>
+                          </subModelOperations>
+                        </subModelOperations>
+                      </firstModelOperations>
+                    </initialOperation>
+                  </controls>
+                </groups>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+        </toolSections>
+      </defaultLayer>
+    </ownedRepresentations>
+  </ownedViewpoints>
+</description:Group>

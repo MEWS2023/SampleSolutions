@@ -1,0 +1,184 @@
+grammar ac.at.tuwien.big.Scml with org.eclipse.xtext.common.Terminals
+
+import "http://www.example.org/scml" 
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+SmartCity returns SmartCity:
+	{SmartCity}
+	'SmartCity'
+	name=EString
+	'{'
+		('categories' '[' category+=Category ( "," category+=Category)* ']' )?
+		('projects' '[' project+=Project ( "," project+=Project)* ']' )?
+	'}';
+
+
+InfrastructureComponent returns InfrastructureComponent:
+	BuildingComponent | TransportationComponent | EnvironmentalComponent;
+
+
+Device returns Device:
+	Sensor | Actuator;
+
+
+EString returns ecore::EString:
+	STRING | ID;
+
+Category returns Category:
+	name=EString ( '(' 'SDG' '=' SDG+=EInt ( "," SDG+=EInt)* ')')?
+	;
+
+Project returns Project:
+	name=EString ('belongsTo' '(' category+=[Category] ( "," category+=[Category])* ')')?
+	'{'
+		('components' '[' component+=InfrastructureComponent ( "," component+=InfrastructureComponent)* ']' )?
+		&
+		('indicators' '[' indicator+=KPIMeasurementDevice ( "," indicator+=KPIMeasurementDevice)* ']' )?
+	'}';
+
+EInt returns ecore::EInt:
+	'-'? INT;
+
+KPIMeasurementDevice returns KPIMeasurementDevice:
+	name=EString ('(' 'status' '=' status=Status (',' 'parameter' '=' parameter=[Parameter])? ')')?
+	'{'
+		('lastCalculation' '[' lastCalculation+=EString ( "," lastCalculation+=EString)* ']' )?
+		&
+		'nextCalculation' nextCalculation=EString
+	'}';
+
+Location returns Location:
+	'lat' '=' Lat=EFloat ',' 'long' '=' Long=EFloat
+	;
+
+DataValue returns DataValue:
+	'DataValue' ('(' collected?='collected' ')')?
+	'{'
+		'dType' type=DataType
+		'value' value=EString
+		'producedTime' producedTime=EString
+		('consumedTime' consumedTime=EString)?
+	'}';
+
+Parameter returns Parameter:
+	name=EString '(' 'unit' '=' unit=EString ',' 'type' '=' type=ParameterType ')'
+	'{'
+		'goalValue' ':' goalreferencevalue=GoalReferenceValue
+		&
+		'dataSource' ':' component=[InfrastructureComponent]
+		&
+		('observedValue' observedValue=AggregatedValue)?
+	'}';
+
+BuildingComponent returns BuildingComponent:
+	'BuildingComponent' name=EString
+	'{'
+		('buildingComponentSuper' isPartOf=[InfrastructureComponent])?
+		&
+		('buildingComponentSub' '[' composedOf+=[InfrastructureComponent] ( "," composedOf+=[InfrastructureComponent])* ']' )?
+		&
+		'buildingComponentLocation' ':' location=Location
+		&
+		('buildingComponentData' '{' produces+=DataValue ( "," produces+=DataValue)* '}' )?
+		&
+		'buildingComponentParameter' parameter=Parameter
+		&
+		('buildingComponentDevices' '[' device+=Device ( "," device+=Device)* ']' )?
+	'}'
+	;
+
+
+TransportationComponent returns TransportationComponent:
+	'TransportationComponent' name=EString 
+	'{'
+		('transportationComponentSuper' isPartOf=[InfrastructureComponent])?
+		&
+		('transportationComponentSub' '[' composedOf+=[InfrastructureComponent] ( "," composedOf+=[InfrastructureComponent])* ']' )?
+		&
+		'transportComponentLocation' ':' location=Location
+		&
+		('transportComponentData' '{' produces+=DataValue ( "," produces+=DataValue)* '}' )?
+		&
+		'transportComponentParameter' parameter=Parameter
+		&
+		('transportComponentDevices' '[' device+=Device ( "," device+=Device)* ']' )?
+	'}'
+	;
+
+EnvironmentalComponent returns EnvironmentalComponent:
+	'EnvironmentalComponent'
+	name=EString 
+	'{'
+		('environmentalComponentSuper' isPartOf=[InfrastructureComponent])?
+		&
+		('environmentalComponentSub' '[' composedOf+=[InfrastructureComponent] ( "," composedOf+=[InfrastructureComponent])* ']' )?
+		&
+		'environmentalComponentLocation' ':' location=Location
+		&
+		('environmentalComponentData' '{' produces+=DataValue ( "," produces+=DataValue)* '}' )?
+		&
+		'environmentalComponentParameter' parameter=Parameter
+		&
+		('environmentalComponentDevices' '[' device+=Device ( "," device+=Device)* ']' )?
+	'}'
+	;
+
+
+EFloat returns ecore::EFloat:
+	'-'? INT? '.' INT (('E'|'e') '-'? INT)?;
+
+enum DataType returns DataType:
+				STRING = 'STRING' | BOOL = 'BOOL' | INTEGER = 'INTEGER' | FLOAT = 'FLOAT';
+
+
+GoalReferenceValue returns GoalReferenceValue:
+	'GoalValue' '(' 'value' '=' value=EString ',' 'type' '=' type=DataType')'
+	('basedOn' '->' basis=Basis)?
+	;
+
+AggregatedValue returns AggregatedValue:
+	'{'
+		'value' ':' value=EString
+		'type' ':' type=DataType
+		'aggregatorType' ':' aggregator=Operation
+		('aggregatedTime' ':' aggregatedTime=EString)?
+	'}';
+
+enum ParameterType returns ParameterType:
+				AIRQUALITY = 'AIRQUALITY' |
+				 WEATHER = 'WEATHER' | 
+				 TRAFFIC = 'TRAFFIC' | 
+				 ENERGY = 'ENERGY' | 
+				 AGRICULTURAL = 'AGRICULTURAL' | 
+				 NAVIGATION = 'NAVIGATION' | 
+				 WASTEMANAGEMENT = 'WASTEMANAGEMENT' | 
+				 SAFETY = 'SAFETY';
+
+
+Basis returns Basis:
+	'Basis'
+	'{'
+		'description' description=EString
+		'principleType' principleType=PrincipleType
+		'source' source=EString
+	'}';
+
+enum PrincipleType returns PrincipleType:
+				LAW = 'LAW' | STANDARD = 'STANDARD' | POLICY = 'POLICY';
+
+enum Operation returns Operation:
+				SUM = 'SUM' | DIFF = 'DIFF' | AVG = 'AVG' | MIN = 'MIN' | MAX = 'MAX';
+
+Sensor returns Sensor:
+	'Sensor'
+	name=EString '(' 'type' '=' type=ParameterType ')'
+	;
+
+Actuator returns Actuator:
+	'Actuator'
+	name=EString '(' 'type' '=' type=ParameterType ')'
+	;
+
+enum Status returns Status:
+	GOOD = 'GOOD' | WARN = 'WARN' | CRITICAL = 'CRITICAL'
+;
